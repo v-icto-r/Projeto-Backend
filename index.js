@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const Store = require('./controllers/Store');
- const Sales = require('./controllers/sales');
+// const Sales = require('./controllers/sales');
 
 const app = express();
 
@@ -18,6 +18,11 @@ app.get('/products', Store.getAll);
 app.get('/products/:id', Store.findById);
 app.put('/products/:id', Store.updateById);
 app.delete('/products/:id', Store.deleteProduct);
+app.post('/sales', Sales.create);
+app.get('/sales', Sales.getAll);
+app.get('/sales/:id', Sales.findById);
+app.put('/sales/:id', Sales.updateById);
+app.delete('/sales/:id', Sales.deleteSale);
 
 const PORT = process.env.PORT || PORT_NUMBER;
 
