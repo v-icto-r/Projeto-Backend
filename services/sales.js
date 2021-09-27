@@ -36,7 +36,7 @@ const verifyTypeOfQuantity = (quantity) => {
 
   return true;
 };
-const isValid = async (quantity) => {
+const isValid = (quantity) => {
   if (!verifyQuantity(quantity)) return errWrongIdOrInvalidQuantity;
 
   if (!verifyTypeOfQuantity(quantity)) return errWrongIdOrInvalidQuantity;
@@ -74,11 +74,22 @@ const deleteSale = async (id) => {
 const create = async (arr) => {
   const ZEROINDEX = 0;
   let index;
+/*
+  for (index of arr) {
+    const productValid = await isValid(index.quantity);
+    if (typeof productValid === 'object') return productValid;
+  }
+  https://www.techiediaries.com/promise-all-map-async-await-example/ 
+
+  https://www.techiediaries.com/promise-all-map-async-await-example/ 
+*/
+  // Promise.all.map(arr).then(() => {}
   for (index = ZEROINDEX; index < arr.length; index += 1) {
-    const productValid = await isValid(arr[index].quantity);
+    const productValid = isValid(arr[index].quantity);
 
     if (typeof productValid === 'object') return productValid;
   }
+  
   const resultItensSold = itensSold(arr);
 
   const { insertedId } = await Sales.create(resultItensSold);
@@ -97,11 +108,11 @@ const updateById = async (arr, id) => {
   let index;
 
   for (index = ZEROINDEX; index < arrayProducts.length; index += 1) {
-    const productValid = await isValid(arrayProducts[index].quantity);
+    const productValid = isValid(arrayProducts[index].quantity);
 
     if (typeof productValid === 'object') return productValid;
 
-    await Sales.updateById(arrayProducts[index].quantity, id, index);
+    Sales.updateById(arrayProducts[index].quantity, id, index);
   }
 
   const result = await findById(id);

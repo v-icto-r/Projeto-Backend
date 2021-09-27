@@ -22,7 +22,16 @@ const deleteById = async (id) => {
       .deleteOne({ _id: ObjectId(id) }));
     return result;
 };
-const create = async (itensSold) =>
+//
+/*
+
+const createSale = (data) => 
+  connection()
+  .then((db) => db.collection('sales').insertOne({ itensSold: data }))
+  .then((result) => result.ops[0]);
+
+*/
+const create = (itensSold) =>
   connection()
     .then((db) =>
       db.collection('sales').insertOne(itensSold)).then((result) => result);
