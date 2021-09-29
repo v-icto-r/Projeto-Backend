@@ -53,6 +53,7 @@ const {
         },
       });
     }
+    //   expect(response).to.
     const product = await findOne(null, name);
     if (product) {
       return ({ 

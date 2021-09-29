@@ -24,6 +24,7 @@ const findSale = async (id) => {
       },
     });
   }
+  //   expect(response).to.
   const sale = await findOne(id);
   if (!sale || sale._id == undefined) {
     return ({

@@ -1,5 +1,5 @@
 const rescue = require('express-rescue');
-
+//   expect(response).to.
 const {
   registerSale,
   listAllSales,
