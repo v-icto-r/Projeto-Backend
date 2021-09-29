@@ -1,6 +1,6 @@
 const connection = require('./connection');
 const { ObjectId } = require('mongodb');
-//   expect(response).to.
+
 const register = async (name, quantity) => {
   const db = await connection();
   const products = await db.collection('products')

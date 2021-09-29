@@ -6,7 +6,6 @@ const {
 } = require('./routes');
 
 const app = express();
-//   expect(response).to.
 
 const PORT_NUMBER = 3000;
 const PORT = process.env.PORT || PORT_NUMBER;

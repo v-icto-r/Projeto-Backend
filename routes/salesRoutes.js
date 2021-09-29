@@ -1,6 +1,6 @@
 const express = require('express');
 const salesRoutes = express.Router();
-//   expect(response).to.
+
 const {
   registerSaleController,
   listAllSalesController,

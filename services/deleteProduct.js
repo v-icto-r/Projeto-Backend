@@ -27,7 +27,6 @@ const {
         },
       });
     }
-    //   expect(response).to.
     const product = await findOne(id);
     if (!product) {
       return ({ 

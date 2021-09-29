@@ -52,7 +52,7 @@ const deleteOne = async (id) => {
     .findOne({ _id: ObjectId(id) });
   await db.collection('sales')
     .deleteOne({ _id: ObjectId(id) });
-//   expect(response).to.
+
   for (let index = zero; index < sales.itensSold.length; index++) {
     const saleProduct = sales.itensSold[index];
     await db.collection('products')

@@ -47,7 +47,6 @@ const registerSale = async (productsSold) => {
       },
     });
   }
-  //   expect(response).to.
   if (!available) {
     return ({ 
       statusCode: notFoundCode,

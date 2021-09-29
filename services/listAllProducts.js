@@ -10,5 +10,5 @@ const listAllProducts = async () => {
     infos: result,
   };
 };
-//   expect(response).to.
+
 module.exports = listAllProducts;

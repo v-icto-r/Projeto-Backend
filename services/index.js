@@ -9,7 +9,7 @@ const findSale = require('./findSale');
 const listAllSales = require('./listAllSales');
 const registerSale = require('./registerSale');
 const updateSale = require('./updateSale');
-//   expect(response).to.
+
 module.exports = {
   deleteProduct,
   deleteSale,

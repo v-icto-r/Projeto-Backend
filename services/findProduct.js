@@ -24,7 +24,6 @@ const findProduct = async (id) => {
       }
     });
   }
-  //   expect(response).to.
   const result = await findOne(id, null);
   if (!result) {
     return ({
