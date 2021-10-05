@@ -1,64 +1,96 @@
-const connection = require('./connection');
 const { ObjectId } = require('mongodb');
+const mongoConnection = require('./connection');
 
-const register = async (name, quantity) => {
-  const db = await connection();
-  const products = await db.collection('products')
-    .insertOne({
-      name,
-      quantity,
-    });
-  return (products.ops[0]);
-};
+async function getAll() {
+  const db = await mongoConnection.getConnection();
+  const products = await db.collection('products').find().toArray();
 
-const listAll = async () => {
-  const db = await connection();
-  const result = await db.collection('products')
-    .find()
-    .toArray();
-  return ({ products: result });
-};
+  return products;
+}
 
-const findOne = async (id, name) => {
-  const db = await connection();
-  const result = await db.collection('products')
-    .findOne({
-      $or: [
-        {_id: ObjectId(id) },
-        { name },
-      ],
-    });
-  return result;
-};
+async function getByName(name) {
+  const db = await mongoConnection.getConnection();
+  const productsByName = await db
+  .collection('products')
+  .find({ name }, {})
+  .toArray();
 
-const updateOne = async (id, name, quantity) => {
-  const db = await connection();
-  await db.collection('products')
-    .updateOne(
-      { _id: ObjectId(id) },
-      { $set: {
-        name,
-        quantity,
-      } }
-    );
+  return productsByName;
+}
+
+async function getById(id) {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await mongoConnection.getConnection();
+  const productsById = await db
+  .collection('products')
+  .find({ _id: ObjectId(id) })
+  .toArray();
+
+  return productsById[0];
+}
+
+async function addProduct({ name, quantity }) {
+  const db = await mongoConnection.getConnection();
+  const { insertedId: _id } = await db.collection('products').insertOne(
+    { name, quantity },
+  );
+
   return {
-    id,
+    _id,
     name,
     quantity,
   };
-};
+}
 
-const deleteOne = async (id) => {
-  const db = await connection();
-  await db.collection('products')
-    .deleteOne({ _id: ObjectId(id) });
-  return;
-};
+async function updateProduct({ id, name, quantity }) {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await mongoConnection.getConnection();
+  await db.collection('products').updateOne(
+    { _id: ObjectId(id) },
+    { $set: { name, quantity } },
+  );
+
+  return {
+    _id: id,
+    name,
+    quantity,
+  };
+}
+
+async function updateProductQty(id, quantity) {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await mongoConnection.getConnection();
+  await db.collection('products').updateOne(
+    { _id: ObjectId(id) },
+    { $set: { quantity } },
+  );
+
+  return {
+    _id: id,
+    quantity,
+  };
+}
+
+async function deleteProduct(id) {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await mongoConnection.getConnection();
+  await db.collection('products').deleteOne(
+    { _id: ObjectId(id) },
+  );
+
+  return { _id: ObjectId(id) };
+}
 
 module.exports = {
-  register,
-  listAll,
-  findOne,
-  updateOne,
-  deleteOne
+  getAll,
+  getByName,
+  getById,
+  addProduct,
+  updateProduct,
+  updateProductQty,
+  deleteProduct,
 };
